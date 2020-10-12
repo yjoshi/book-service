@@ -34,18 +34,18 @@ public class BookController {
     @GetMapping("/books")
     public ResponseEntity<List<Book>> getAllBooks(@RequestParam(required = false) String title) {
         try {
-            List<Book> tutorials = new ArrayList<Book>();
+            List<Book> books = new ArrayList<Book>();
 
             if (title == null)
-                repo.findAll().forEach(tutorials::add);
+                repo.findAll().forEach(books::add);
             else
-                repo.findByTitleContaining(title).forEach(tutorials::add);
+                repo.findByTitleContaining(title).forEach(books::add);
 
-            if (tutorials.isEmpty()) {
+            if (books.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
 
-            return new ResponseEntity<>(tutorials, HttpStatus.OK);
+            return new ResponseEntity<>(books, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
